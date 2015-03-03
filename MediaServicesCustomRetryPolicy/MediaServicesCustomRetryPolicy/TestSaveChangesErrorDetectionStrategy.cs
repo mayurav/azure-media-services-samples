@@ -12,28 +12,17 @@ namespace MediaServicesCustomMediaRetryPolicy
     {
         //created a new detectionstrategy for savecanges to add timeoutexception in the transient exception list.
         protected override bool CheckIsTransient(Exception ex)
-        {
-            if (IsRetriableWebException(ex, operationIdempotentOnRetry: false, retryOnUnauthorizedErrors: false))
-            {
-                return true;
-            }
-
-            if (IsRetriableDataServiceException(ex, operationIdempotentOnRetry: false, retryOnUnauthorizedErrors: false))
-            {
-                return true;
-            }
-
-            if (IsSocketException(ex))
-            {
-                return true;
-            }
-
+       {
             if (IsTimeoutException(ex))
             {
                 return true;
             }
-            return false;
+
+            return base.CheckIsTransient(ex);
+
         }
     }
 }
+
+
 
